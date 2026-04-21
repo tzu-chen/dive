@@ -1,0 +1,27 @@
+.card {
+  background: var(--paper-raised);
+  border: 0.5px solid var(--border-soft);
+  border-left: 2px solid var(--gilt);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
+.bodyQuote,
+.bodyThought {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+.bodyQuote {
+  font-style: italic;
+}
+
+.footer {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  color: var(--ink-faded);
+  margin-top: 6px;
+}

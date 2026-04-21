@@ -1,0 +1,34 @@
+.card {
+  background: var(--paper-sunken);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--ink-faded);
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  margin-bottom: 4px;
+}
+
+.value {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.unit {
+  font-size: 13px;
+  color: var(--ink-faded);
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .card { padding: 10px; }
+  .value { font-size: 18px; }
+  .unit { font-size: 11px; }
+}

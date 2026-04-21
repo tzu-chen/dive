@@ -1,0 +1,45 @@
+.row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  background: var(--paper-raised);
+  border: 0.5px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.row:hover {
+  background: var(--paper-sunken);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.author {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-faded);
+  margin-top: 2px;
+}
+
+.progress {
+  margin-top: 8px;
+  max-width: 320px;
+}
+
+.badge {
+  flex-shrink: 0;
+}

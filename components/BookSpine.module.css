@@ -1,0 +1,61 @@
+.spine {
+  flex-shrink: 0;
+  background: var(--spine-bg);
+  color: var(--spine-fg);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 2px 2px 0 rgba(58, 42, 26, 0.1);
+  overflow: hidden;
+}
+
+.highlight {
+  position: absolute;
+  left: 4px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.title {
+  font-family: var(--font-serif);
+  text-align: center;
+  font-style: italic;
+  line-height: 1.3;
+  z-index: 1;
+}
+
+.sm {
+  width: 54px;
+  height: 82px;
+  padding: 6px;
+}
+.sm .title { font-size: 9px; line-height: 1.2; }
+.sm .highlight { left: 3px; top: 5px; bottom: 5px; width: 1.5px; }
+
+.md {
+  width: 78px;
+  height: 118px;
+  padding: 10px;
+}
+.md .title { font-size: 11px; }
+
+.lg {
+  width: 130px;
+  height: 196px;
+  padding: 14px;
+  box-shadow: 3px 3px 0 rgba(58, 42, 26, 0.12);
+}
+.lg .title { font-size: 15px; }
+.lg .highlight { left: 6px; top: 8px; bottom: 8px; }
+
+.fluid {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  padding: 8px;
+}
+.fluid .title { font-size: 10px; }
+.fluid .highlight { left: 3px; top: 5px; bottom: 5px; width: 2px; }

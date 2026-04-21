@@ -1,0 +1,25 @@
+.cell {
+  display: block;
+  text-align: center;
+}
+
+.spineWrap {
+  margin-bottom: 6px;
+}
+
+.title {
+  font-size: 11px;
+  color: var(--ink-muted);
+  font-family: var(--font-serif);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.author {
+  font-size: 10px;
+  color: var(--ink-faded);
+  font-family: var(--font-serif);
+  font-style: italic;
+}

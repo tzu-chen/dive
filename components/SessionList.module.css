@@ -1,0 +1,29 @@
+.list {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 0.5px solid rgba(139, 94, 52, 0.12);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.date {
+  font-style: italic;
+  color: var(--ink-faded);
+}
+
+.empty {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-faded);
+  padding: 8px 0;
+}

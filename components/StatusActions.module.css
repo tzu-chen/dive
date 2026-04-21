@@ -1,0 +1,27 @@
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 11px;
+  background: transparent;
+  border: 0.5px solid var(--gilt);
+  color: var(--ink-faded);
+  padding: 4px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.pill:hover:not(:disabled) {
+  background: var(--paper-sunken);
+}
+
+.pill:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

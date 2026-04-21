@@ -1,0 +1,94 @@
+.toggle {
+  background: transparent;
+  border: 0.5px dashed var(--gilt);
+  color: var(--ink-faded);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.toggle:hover {
+  background: var(--paper-sunken);
+}
+
+.form {
+  background: var(--paper-raised);
+  border: 0.5px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.kind,
+.page,
+.body {
+  background: transparent;
+  border: 0.5px solid var(--gilt);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.kind  { flex: 0 0 110px; }
+.page  { flex: 1; min-width: 0; }
+
+.body {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  font-style: italic;
+  padding: 8px 10px;
+  height: 60px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.cancel {
+  background: transparent;
+  border: 0.5px solid var(--gilt);
+  color: var(--ink-faded);
+  font-family: var(--font-serif);
+  font-size: 12px;
+  padding: 7px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save {
+  background: var(--leather);
+  border: none;
+  color: var(--spine-1-fg);
+  font-family: var(--font-serif);
+  font-size: 12px;
+  padding: 7px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+}
+
+.save:disabled { opacity: 0.6; cursor: default; }
+
+.error {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 12px;
+  color: #8B3A2E;
+  margin-top: 4px;
+}

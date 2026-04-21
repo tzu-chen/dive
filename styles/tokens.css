@@ -1,0 +1,22 @@
+:root {
+  --paper: #FAF6EE;
+  --paper-raised: #FFFDF8;
+  --paper-sunken: #F3EBDA;
+  --ink: #3A2A1A;
+  --ink-muted: #5A3E24;
+  --ink-faded: #8B6E4E;
+  --leather: #8B5E3C;
+  --gilt: #C9A876;
+  --thread: #E8DCC4;
+  --border-soft: rgba(139, 94, 52, 0.15);
+  --border-firm: rgba(139, 94, 52, 0.30);
+
+  --spine-1-bg: #6B3A2E; --spine-1-fg: #F5E6C8;
+  --spine-2-bg: #2C4A3E; --spine-2-fg: #E8D9B8;
+  --spine-3-bg: #8B3A2E; --spine-3-fg: #F5E6C8;
+  --spine-4-bg: #3D5A4A; --spine-4-fg: #E8D9B8;
+  --spine-5-bg: #4A3A6B; --spine-5-fg: #F0E2C8;
+  --spine-6-bg: #6B4A2E; --spine-6-fg: #F5E6C8;
+  --spine-7-bg: #2E4A6B; --spine-7-fg: #E8D9B8;
+  --spine-8-bg: #3A3A4A; --spine-8-fg: #E8D9B8;
+}

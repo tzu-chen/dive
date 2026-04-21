@@ -1,0 +1,14 @@
+.dots {
+  display: flex;
+  gap: 4px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.active { background: var(--leather); }
+.empty  { background: var(--thread); }
+.today  { background: transparent; border: 0.5px solid var(--gilt); }
