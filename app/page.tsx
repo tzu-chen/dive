@@ -40,9 +40,9 @@ export default async function Dashboard() {
           value={data.booksFinishedThisYear}
           unit={`/ ${data.yearlyGoal}`}
         />
-        <div className={styles.libraryMetric}>
+        <Link href="/library" className={styles.libraryMetric} aria-label="open the library">
           <MetricCard label="library" value={data.libraryCount} unit="books" />
-        </div>
+        </Link>
       </div>
 
       <h2 className={styles.section}>Currently reading</h2>

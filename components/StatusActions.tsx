@@ -7,6 +7,7 @@ import styles from './StatusActions.module.css';
 
 const ACTIONS: { status: BookStatus; label: string }[] = [
   { status: 'reading', label: 'mark reading' },
+  { status: 'owned', label: 'mark owned' },
   { status: 'finished', label: 'mark finished' },
   { status: 'abandoned', label: 'abandon' },
 ];

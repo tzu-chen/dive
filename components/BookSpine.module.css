@@ -59,3 +59,17 @@
 }
 .fluid .title { font-size: 10px; }
 .fluid .highlight { left: 3px; top: 5px; bottom: 5px; width: 2px; }
+
+.progressTrack {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--thread);
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--gilt);
+}

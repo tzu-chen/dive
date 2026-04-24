@@ -13,6 +13,8 @@ const createInput = z.object({
   pageCount: z.number().int().positive().nullable().optional(),
   isbn13: z.string().optional().nullable(),
   publishedYear: z.number().int().optional().nullable(),
+  type: z.string().trim().min(1).optional().nullable(),
+  purchaseLocation: z.string().trim().min(1).optional().nullable(),
   status: bookStatusEnum.default('want'),
 });
 
@@ -48,6 +50,8 @@ export const booksRouter = router({
       openLibraryId: null,
       coverUrl: null,
       coverPath: null,
+      type: input.type ?? null,
+      purchaseLocation: input.purchaseLocation ?? null,
       status: input.status,
       startedAt: input.status === 'reading' ? now : null,
       finishedAt: input.status === 'finished' ? now : null,
@@ -79,6 +83,10 @@ export const booksRouter = router({
         update.abandonedAt = null;
       } else if (input.status === 'abandoned') {
         update.abandonedAt = now;
+      } else if (input.status === 'owned') {
+        update.startedAt = null;
+        update.finishedAt = null;
+        update.abandonedAt = null;
       } else {
         update.startedAt = null;
         update.finishedAt = null;

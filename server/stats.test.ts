@@ -30,6 +30,8 @@ const book = (overrides: Partial<Book>): Book => ({
   publishedYear: null,
   coverUrl: null,
   coverPath: null,
+  type: null,
+  purchaseLocation: null,
   status: 'reading',
   startedAt: null,
   finishedAt: null,

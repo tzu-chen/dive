@@ -55,6 +55,14 @@
   margin-bottom: 14px;
 }
 
+.provenance {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-faded);
+  margin-bottom: 14px;
+}
+
 .progressRow {
   margin-top: auto;
 }

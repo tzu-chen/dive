@@ -1,82 +1,56 @@
 import Link from 'next/link';
 import { getCaller } from '@/server/caller';
-import { BookListRow } from '@/components/BookListRow';
+import { LibraryView, type LibraryBook } from '@/components/LibraryView';
 import { currentPage as pageFromSessions } from '@/server/stats';
-import { bookStatusEnum, type BookStatus } from '@/server/types';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
 
-const FILTERS: { key: 'all' | BookStatus; label: string }[] = [
-  { key: 'all', label: 'all' },
-  { key: 'reading', label: 'reading' },
-  { key: 'want', label: 'want' },
-  { key: 'finished', label: 'finished' },
-  { key: 'abandoned', label: 'abandoned' },
-];
-
-function chipHref(key: 'all' | BookStatus) {
-  return key === 'all' ? '/library' : `/library?status=${key}`;
-}
-
-export default async function LibraryPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ status?: string }>;
-}) {
-  const { status: statusParam } = await searchParams;
-  const parsed = bookStatusEnum.safeParse(statusParam);
-  const active: 'all' | BookStatus = parsed.success ? parsed.data : 'all';
-
+export default async function LibraryPage() {
   const caller = getCaller();
-  const books = await caller.books.list(active === 'all' ? undefined : { status: active });
+  const books = await caller.books.list();
 
   const readingIds = books.filter((b) => b.status === 'reading').map((b) => b.id);
-  const sessionsByBook = new Map<string, Awaited<ReturnType<typeof caller.sessions.listForBook>>>();
+  const currentPageByBook = new Map<string, number>();
   await Promise.all(
     readingIds.map(async (id) => {
-      sessionsByBook.set(id, await caller.sessions.listForBook({ bookId: id }));
+      const sessions = await caller.sessions.listForBook({ bookId: id });
+      currentPageByBook.set(id, pageFromSessions(sessions));
     }),
   );
 
+  const view: LibraryBook[] = books.map((b) => ({
+    id: b.id,
+    title: b.title,
+    authors: JSON.parse(b.authors) as string[],
+    status: b.status as LibraryBook['status'],
+    pageCount: b.pageCount,
+    currentPage: currentPageByBook.get(b.id) ?? 0,
+    finishedAt: b.finishedAt,
+    updatedAt: b.updatedAt,
+  }));
+
+  const total = books.length;
+
   return (
     <div className={styles.page}>
+      <Link href="/" className={styles.backLink}>← back to the reading room</Link>
+
       <header className={styles.header}>
-        <h1 className={styles.title}>Library</h1>
+        <div>
+          <h1 className={styles.title}>The Library</h1>
+          <p className={styles.subtitle}>{subtitleFor(total)}</p>
+        </div>
         <Link href="/add" className={styles.addLink}>+ add a book</Link>
       </header>
 
-      <div className={styles.filters}>
-        {FILTERS.map((f) => (
-          <Link
-            key={f.key}
-            href={chipHref(f.key)}
-            className={`${styles.chip} ${active === f.key ? styles.chipActive : ''}`}
-          >
-            {f.label}
-          </Link>
-        ))}
-      </div>
-
-      {books.length === 0 ? (
-        <p className={styles.empty}>
-          {active === 'all'
-            ? 'no books yet.'
-            : `no books in "${active}".`}{' '}
-          <Link href="/add" className={styles.inlineLink}>add one</Link>.
-        </p>
-      ) : (
-        <div className={styles.list}>
-          {books.map((b) => (
-            <BookListRow
-              key={b.id}
-              book={b}
-              authors={JSON.parse(b.authors) as string[]}
-              currentPage={pageFromSessions(sessionsByBook.get(b.id) ?? [])}
-            />
-          ))}
-        </div>
-      )}
+      <LibraryView books={view} />
     </div>
   );
+}
+
+function subtitleFor(count: number): string {
+  if (count === 0) return 'no books on the shelves yet';
+  if (count === 1) return 'one book, quietly kept';
+  return `${count} books, quietly kept`;
 }

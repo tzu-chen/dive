@@ -15,6 +15,8 @@ export function AddBookForm() {
   const [pageCount, setPageCount] = useState('');
   const [isbn13, setIsbn13] = useState('');
   const [year, setYear] = useState('');
+  const [type, setType] = useState('');
+  const [purchaseLocation, setPurchaseLocation] = useState('');
   const [status, setStatus] = useState<BookStatus>('want');
   const [error, setError] = useState<string | null>(null);
 
@@ -43,6 +45,8 @@ export function AddBookForm() {
       pageCount: pageCountNum && Number.isFinite(pageCountNum) && pageCountNum > 0 ? pageCountNum : null,
       isbn13: isbn13.trim() || null,
       publishedYear: yearNum && Number.isFinite(yearNum) ? yearNum : null,
+      type: type.trim() || null,
+      purchaseLocation: purchaseLocation.trim() || null,
       status,
     });
   };
@@ -97,6 +101,24 @@ export function AddBookForm() {
           onChange={(e) => setIsbn13(e.target.value)}
         />
       </label>
+      <div className={styles.row}>
+        <label className={styles.field}>
+          <span className={styles.label}>type <span className={styles.hint}>(fiction, poem, ...)</span></span>
+          <input
+            className={styles.input}
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+          />
+        </label>
+        <label className={styles.field}>
+          <span className={styles.label}>purchased at <span className={styles.hint}>(optional)</span></span>
+          <input
+            className={styles.input}
+            value={purchaseLocation}
+            onChange={(e) => setPurchaseLocation(e.target.value)}
+          />
+        </label>
+      </div>
       <label className={styles.field}>
         <span className={styles.label}>status</span>
         <select

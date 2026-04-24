@@ -20,6 +20,8 @@ export const books = sqliteTable(
     publishedYear: integer('published_year'),
     coverUrl: text('cover_url'),
     coverPath: text('cover_path'),
+    type: text('type'),
+    purchaseLocation: text('purchase_location'),
     status: text('status').notNull().default('want'),
     startedAt: text('started_at'),
     finishedAt: text('finished_at'),
@@ -30,7 +32,7 @@ export const books = sqliteTable(
   (t) => [
     check(
       'books_status_check',
-      sql`${t.status} IN ('want', 'reading', 'finished', 'abandoned')`,
+      sql`${t.status} IN ('want', 'owned', 'reading', 'finished', 'abandoned')`,
     ),
     index('books_status_idx').on(t.status),
   ],

@@ -40,7 +40,9 @@ export default async function BookDetail({ params }: { params: Promise<{ id: str
     authors.join(', ') || 'unknown author',
     book.pageCount ? `${book.pageCount} pages` : null,
     book.publishedYear ?? null,
+    book.type ?? null,
   ].filter(Boolean);
+  const purchaseLocation = book.purchaseLocation;
 
   return (
     <div className={styles.page}>
@@ -57,6 +59,9 @@ export default async function BookDetail({ params }: { params: Promise<{ id: str
             <StatusBadge status={status} />
             <StatusActions bookId={book.id} current={status} />
           </div>
+          {purchaseLocation && (
+            <div className={styles.provenance}>acquired from {purchaseLocation}</div>
+          )}
           <div className={styles.progressRow}>
             <ProgressBar
               currentPage={progress.currentPage}

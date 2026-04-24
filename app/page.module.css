@@ -73,6 +73,12 @@
   border-bottom: 0.5px solid var(--gilt);
 }
 
+.libraryMetric {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
 .upNext {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
