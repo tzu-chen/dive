@@ -8,19 +8,32 @@ export function BookSpine({
   bookId,
   size = 'md',
   progress,
+  hasCover = false,
 }: {
   title: string;
   bookId: string;
   size?: Size;
   progress?: number;
+  hasCover?: boolean;
 }) {
   return (
     <div
       className={`${styles.spine} ${styles[size]}`}
       style={spineVars(bookId) as React.CSSProperties}
     >
-      <div className={styles.highlight} />
-      <div className={styles.title}>{title}</div>
+      {hasCover ? (
+        <img
+          className={styles.cover}
+          src={`/api/covers/${bookId}`}
+          alt={title}
+          loading="lazy"
+        />
+      ) : (
+        <>
+          <div className={styles.highlight} />
+          <div className={styles.title}>{title}</div>
+        </>
+      )}
       {typeof progress === 'number' && (
         <div className={styles.progressTrack}>
           <div

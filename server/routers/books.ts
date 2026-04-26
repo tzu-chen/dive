@@ -6,6 +6,7 @@ import { db } from '../db';
 import { books } from '../schema';
 import { bookStatusEnum } from '../types';
 import { nowISO } from '../dateUtil';
+import { fetchCoverForBook, deleteCoverFile } from '../openlibrary';
 
 const createInput = z.object({
   title: z.string().min(1).max(500),
@@ -37,7 +38,7 @@ export const booksRouter = router({
       return row;
     }),
 
-  create: publicProcedure.input(createInput).mutation(({ input }) => {
+  create: publicProcedure.input(createInput).mutation(async ({ input }) => {
     const now = nowISO();
     const id = crypto.randomUUID();
     const row = {
@@ -49,7 +50,7 @@ export const booksRouter = router({
       publishedYear: input.publishedYear ?? null,
       openLibraryId: null,
       coverUrl: null,
-      coverPath: null,
+      coverPath: null as string | null,
       type: input.type ?? null,
       purchaseLocation: input.purchaseLocation ?? null,
       status: input.status,
@@ -60,8 +61,42 @@ export const booksRouter = router({
       updatedAt: now,
     };
     db.insert(books).values(row).run();
+
+    const coverPath = await fetchCoverForBook(id, input.title, input.authors);
+    if (coverPath) {
+      db.update(books).set({ coverPath, updatedAt: nowISO() }).where(eq(books.id, id)).run();
+      row.coverPath = coverPath;
+    }
     return row;
   }),
+
+  refetchCover: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input }) => {
+      const existing = db.select().from(books).where(eq(books.id, input.id)).get();
+      if (!existing) throw new TRPCError({ code: 'NOT_FOUND', message: 'Book not found' });
+      const authors = JSON.parse(existing.authors) as string[];
+      const coverPath = await fetchCoverForBook(existing.id, existing.title, authors);
+      if (!coverPath) return { id: existing.id, coverPath: null };
+      db.update(books)
+        .set({ coverPath, updatedAt: nowISO() })
+        .where(eq(books.id, existing.id))
+        .run();
+      return { id: existing.id, coverPath };
+    }),
+
+  removeCover: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input }) => {
+      const existing = db.select().from(books).where(eq(books.id, input.id)).get();
+      if (!existing) throw new TRPCError({ code: 'NOT_FOUND', message: 'Book not found' });
+      if (existing.coverPath) await deleteCoverFile(existing.coverPath);
+      db.update(books)
+        .set({ coverPath: null, coverUrl: null, updatedAt: nowISO() })
+        .where(eq(books.id, input.id))
+        .run();
+      return { id: input.id };
+    }),
 
   updateStatus: publicProcedure
     .input(z.object({ id: z.string(), status: bookStatusEnum }))
@@ -94,6 +129,38 @@ export const booksRouter = router({
       }
       db.update(books).set(update).where(eq(books.id, input.id)).run();
       return { id: input.id, status: input.status };
+    }),
+
+  update: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string().trim().min(1).max(500),
+        authors: z.array(z.string().trim().min(1)).default([]),
+        pageCount: z.number().int().positive().nullable(),
+        isbn13: z.string().trim().min(1).nullable(),
+        publishedYear: z.number().int().nullable(),
+        type: z.string().trim().min(1).nullable(),
+        purchaseLocation: z.string().trim().min(1).nullable(),
+      }),
+    )
+    .mutation(({ input }) => {
+      const existing = db.select().from(books).where(eq(books.id, input.id)).get();
+      if (!existing) throw new TRPCError({ code: 'NOT_FOUND', message: 'Book not found' });
+      db.update(books)
+        .set({
+          title: input.title,
+          authors: JSON.stringify(input.authors),
+          pageCount: input.pageCount,
+          isbn13: input.isbn13,
+          publishedYear: input.publishedYear,
+          type: input.type,
+          purchaseLocation: input.purchaseLocation,
+          updatedAt: nowISO(),
+        })
+        .where(eq(books.id, input.id))
+        .run();
+      return { id: input.id };
     }),
 
   delete: publicProcedure

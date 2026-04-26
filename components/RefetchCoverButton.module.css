@@ -1,0 +1,47 @@
+.wrap {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-faded);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--border-soft);
+  text-underline-offset: 2px;
+}
+
+.link:hover:not(:disabled) {
+  color: var(--leather);
+}
+
+.link:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.fileInput {
+  display: none;
+}
+
+.status {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-faded);
+}

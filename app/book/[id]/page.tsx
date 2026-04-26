@@ -6,6 +6,8 @@ import { BookSpine } from '@/components/BookSpine';
 import { ProgressBar } from '@/components/ProgressBar';
 import { StatusBadge } from '@/components/StatusBadge';
 import { StatusActions } from '@/components/StatusActions';
+import { RefetchCoverButton } from '@/components/RefetchCoverButton';
+import { BookEditForm } from '@/components/BookEditForm';
 import { SessionForm } from '@/components/SessionForm';
 import { SessionList } from '@/components/SessionList';
 import { NoteForm } from '@/components/NoteForm';
@@ -50,7 +52,8 @@ export default async function BookDetail({ params }: { params: Promise<{ id: str
 
       <div className={styles.headerCard}>
         <div className={styles.spineWrap}>
-          <BookSpine title={book.title} bookId={book.id} size="lg" />
+          <BookSpine title={book.title} bookId={book.id} size="lg" hasCover={Boolean(book.coverPath)} />
+          <RefetchCoverButton bookId={book.id} hasCover={Boolean(book.coverPath)} />
         </div>
         <div className={styles.headerBody}>
           <h1 className={styles.title}>{book.title}</h1>
@@ -62,6 +65,16 @@ export default async function BookDetail({ params }: { params: Promise<{ id: str
           {purchaseLocation && (
             <div className={styles.provenance}>acquired from {purchaseLocation}</div>
           )}
+          <BookEditForm
+            bookId={book.id}
+            title={book.title}
+            authors={authors}
+            pageCount={book.pageCount}
+            isbn13={book.isbn13}
+            publishedYear={book.publishedYear}
+            type={book.type}
+            purchaseLocation={book.purchaseLocation}
+          />
           <div className={styles.progressRow}>
             <ProgressBar
               currentPage={progress.currentPage}

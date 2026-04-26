@@ -20,6 +20,7 @@ export type LibraryBook = {
   currentPage: number;
   finishedAt: string | null;
   updatedAt: string;
+  coverPath: string | null;
 };
 
 type SortKey = 'recent' | 'title' | 'author';
@@ -332,6 +333,7 @@ function SpineCell({
         bookId={book.id}
         size="fluid"
         progress={progress}
+        hasCover={Boolean(book.coverPath)}
       />
       <div className={styles.cellTitle}>{book.title}</div>
       <div className={styles.cellMeta}>{meta}</div>

@@ -60,6 +60,15 @@
 .fluid .title { font-size: 10px; }
 .fluid .highlight { left: 3px; top: 5px; bottom: 5px; width: 2px; }
 
+.cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .progressTrack {
   position: absolute;
   bottom: 0;

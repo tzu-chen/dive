@@ -28,6 +28,7 @@ export default async function LibraryPage() {
     currentPage: currentPageByBook.get(b.id) ?? 0,
     finishedAt: b.finishedAt,
     updatedAt: b.updatedAt,
+    coverPath: b.coverPath,
   }));
 
   const total = books.length;

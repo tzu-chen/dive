@@ -13,6 +13,7 @@ export function BookCard({
   startedAt,
   noteCount,
   latestNote,
+  hasCover,
 }: {
   bookId: string;
   title: string;
@@ -22,10 +23,11 @@ export function BookCard({
   startedAt: string | null;
   noteCount: number;
   latestNote: { body: string; kind: string } | null;
+  hasCover?: boolean;
 }) {
   return (
     <Link href={`/book/${bookId}`} className={styles.card}>
-      <BookSpine title={title} bookId={bookId} size="md" />
+      <BookSpine title={title} bookId={bookId} size="md" hasCover={hasCover} />
       <div className={styles.body}>
         <div>
           <div className={styles.title}>{title}</div>

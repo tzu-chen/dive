@@ -12,10 +12,13 @@ export function SessionList({ sessions }: { sessions: Session[] }) {
         const pages = s.endPage - s.startPage;
         return (
           <div key={s.id} className={styles.row}>
-            <span className={styles.date}>{formatMonthDay(s.readOn)}</span>
-            <span>
-              p. {s.startPage} → {s.endPage} · {pages}pp
-            </span>
+            <div className={styles.header}>
+              <span className={styles.date}>{formatMonthDay(s.readOn)}</span>
+              <span>
+                p. {s.startPage} → {s.endPage} · {pages}pp
+              </span>
+            </div>
+            {s.note && <div className={styles.note}>{s.note}</div>}
           </div>
         );
       })}
