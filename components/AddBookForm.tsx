@@ -17,6 +17,7 @@ export function AddBookForm() {
   const [year, setYear] = useState('');
   const [type, setType] = useState('');
   const [purchaseLocation, setPurchaseLocation] = useState('');
+  const [purchaseDate, setPurchaseDate] = useState('');
   const [status, setStatus] = useState<BookStatus>('want');
   const [error, setError] = useState<string | null>(null);
 
@@ -47,6 +48,7 @@ export function AddBookForm() {
       publishedYear: yearNum && Number.isFinite(yearNum) ? yearNum : null,
       type: type.trim() || null,
       purchaseLocation: purchaseLocation.trim() || null,
+      purchaseDate: purchaseDate.trim() || null,
       status,
     });
   };
@@ -119,6 +121,15 @@ export function AddBookForm() {
           />
         </label>
       </div>
+      <label className={styles.field}>
+        <span className={styles.label}>purchase date <span className={styles.hint}>(optional)</span></span>
+        <input
+          type="date"
+          className={styles.input}
+          value={purchaseDate}
+          onChange={(e) => setPurchaseDate(e.target.value)}
+        />
+      </label>
       <label className={styles.field}>
         <span className={styles.label}>status</span>
         <select

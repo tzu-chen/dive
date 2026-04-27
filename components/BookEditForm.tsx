@@ -14,6 +14,7 @@ type Props = {
   publishedYear: number | null;
   type: string | null;
   purchaseLocation: string | null;
+  purchaseDate: string | null;
 };
 
 export function BookEditForm(props: Props) {
@@ -26,6 +27,7 @@ export function BookEditForm(props: Props) {
   const [year, setYear] = useState(props.publishedYear?.toString() ?? '');
   const [type, setType] = useState(props.type ?? '');
   const [purchaseLocation, setPurchaseLocation] = useState(props.purchaseLocation ?? '');
+  const [purchaseDate, setPurchaseDate] = useState(props.purchaseDate ?? '');
   const [error, setError] = useState<string | null>(null);
 
   const mutation = trpc.books.update.useMutation({
@@ -65,6 +67,7 @@ export function BookEditForm(props: Props) {
       publishedYear: yearNum && Number.isFinite(yearNum) ? yearNum : null,
       type: type.trim() || null,
       purchaseLocation: purchaseLocation.trim() || null,
+      purchaseDate: purchaseDate.trim() || null,
     });
   };
 
@@ -76,6 +79,7 @@ export function BookEditForm(props: Props) {
     setYear(props.publishedYear?.toString() ?? '');
     setType(props.type ?? '');
     setPurchaseLocation(props.purchaseLocation ?? '');
+    setPurchaseDate(props.purchaseDate ?? '');
     setError(null);
     setOpen(false);
   };
@@ -151,6 +155,15 @@ export function BookEditForm(props: Props) {
           />
         </label>
       </div>
+      <label className={styles.field}>
+        <span className={styles.label}>purchase date</span>
+        <input
+          type="date"
+          className={styles.input}
+          value={purchaseDate}
+          onChange={(e) => setPurchaseDate(e.target.value)}
+        />
+      </label>
       {error && <div className={styles.error}>{error}</div>}
       <div className={styles.actions}>
         <button type="submit" className={styles.save} disabled={mutation.isPending}>

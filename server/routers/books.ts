@@ -16,6 +16,7 @@ const createInput = z.object({
   publishedYear: z.number().int().optional().nullable(),
   type: z.string().trim().min(1).optional().nullable(),
   purchaseLocation: z.string().trim().min(1).optional().nullable(),
+  purchaseDate: z.string().trim().min(1).optional().nullable(),
   status: bookStatusEnum.default('want'),
 });
 
@@ -53,6 +54,7 @@ export const booksRouter = router({
       coverPath: null as string | null,
       type: input.type ?? null,
       purchaseLocation: input.purchaseLocation ?? null,
+      purchaseDate: input.purchaseDate ?? null,
       status: input.status,
       startedAt: input.status === 'reading' ? now : null,
       finishedAt: input.status === 'finished' ? now : null,
@@ -142,6 +144,7 @@ export const booksRouter = router({
         publishedYear: z.number().int().nullable(),
         type: z.string().trim().min(1).nullable(),
         purchaseLocation: z.string().trim().min(1).nullable(),
+        purchaseDate: z.string().trim().min(1).nullable(),
       }),
     )
     .mutation(({ input }) => {
@@ -156,6 +159,7 @@ export const booksRouter = router({
           publishedYear: input.publishedYear,
           type: input.type,
           purchaseLocation: input.purchaseLocation,
+          purchaseDate: input.purchaseDate,
           updatedAt: nowISO(),
         })
         .where(eq(books.id, input.id))

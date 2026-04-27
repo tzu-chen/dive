@@ -45,6 +45,11 @@ export default async function BookDetail({ params }: { params: Promise<{ id: str
     book.type ?? null,
   ].filter(Boolean);
   const purchaseLocation = book.purchaseLocation;
+  const purchaseDate = book.purchaseDate;
+  const provenance = [
+    purchaseLocation ? `acquired from ${purchaseLocation}` : null,
+    purchaseDate ? `on ${formatMonthDay(purchaseDate)}` : null,
+  ].filter(Boolean).join(' ');
 
   return (
     <div className={styles.page}>
@@ -62,8 +67,8 @@ export default async function BookDetail({ params }: { params: Promise<{ id: str
             <StatusBadge status={status} />
             <StatusActions bookId={book.id} current={status} />
           </div>
-          {purchaseLocation && (
-            <div className={styles.provenance}>acquired from {purchaseLocation}</div>
+          {provenance && (
+            <div className={styles.provenance}>{provenance}</div>
           )}
           <BookEditForm
             bookId={book.id}
@@ -74,6 +79,7 @@ export default async function BookDetail({ params }: { params: Promise<{ id: str
             publishedYear={book.publishedYear}
             type={book.type}
             purchaseLocation={book.purchaseLocation}
+            purchaseDate={book.purchaseDate}
           />
           <div className={styles.progressRow}>
             <ProgressBar

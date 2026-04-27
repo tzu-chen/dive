@@ -21,6 +21,7 @@ export const books = sqliteTable(
     coverPath: text('cover_path'),
     type: text('type'),
     purchaseLocation: text('purchase_location'),
+    purchaseDate: text('purchase_date'),
     status: text('status').notNull().default('want'),
     startedAt: text('started_at'),
     finishedAt: text('finished_at'),
