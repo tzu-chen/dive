@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { and, eq, lt, desc } from 'drizzle-orm';
+import { and, eq, lte, desc, asc } from 'drizzle-orm';
 import { TRPCError } from '@trpc/server';
 import { router, publicProcedure } from '../trpc';
 import { db } from '../db';
@@ -17,11 +17,11 @@ export const sessionsRouter = router({
         .select()
         .from(sessions)
         .where(eq(sessions.bookId, input.bookId))
-        .orderBy(desc(sessions.readOn))
+        .orderBy(desc(sessions.readOn), asc(sessions.createdAt))
         .all();
     }),
 
-  upsertForToday: publicProcedure
+  create: publicProcedure
     .input(
       z.object({
         bookId: z.string(),
@@ -37,7 +37,7 @@ export const sessionsRouter = router({
       const priorSessions = db
         .select()
         .from(sessions)
-        .where(and(eq(sessions.bookId, input.bookId), lt(sessions.readOn, readOn)))
+        .where(and(eq(sessions.bookId, input.bookId), lte(sessions.readOn, readOn)))
         .all();
       const startPage = currentPage(priorSessions);
 
@@ -48,9 +48,10 @@ export const sessionsRouter = router({
         });
       }
 
+      const id = crypto.randomUUID();
       db.insert(sessions)
         .values({
-          id: crypto.randomUUID(),
+          id,
           bookId: input.bookId,
           readOn,
           startPage,
@@ -58,13 +59,9 @@ export const sessionsRouter = router({
           note,
           createdAt: nowISO(),
         })
-        .onConflictDoUpdate({
-          target: [sessions.bookId, sessions.readOn],
-          set: { startPage, endPage: input.endPage, note },
-        })
         .run();
 
-      return { bookId: input.bookId, readOn, startPage, endPage: input.endPage };
+      return { id, bookId: input.bookId, readOn, startPage, endPage: input.endPage };
     }),
 
   delete: publicProcedure

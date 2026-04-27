@@ -5,7 +5,6 @@ import {
   integer,
   sqliteTable,
   text,
-  uniqueIndex,
 } from 'drizzle-orm/sqlite-core';
 
 export const books = sqliteTable(
@@ -32,7 +31,7 @@ export const books = sqliteTable(
   (t) => [
     check(
       'books_status_check',
-      sql`${t.status} IN ('want', 'owned', 'reading', 'finished', 'abandoned')`,
+      sql`${t.status} IN ('want', 'owned', 'reading', 'finished', 'abandoned', 'missing')`,
     ),
     index('books_status_idx').on(t.status),
   ],
@@ -52,7 +51,7 @@ export const sessions = sqliteTable(
     createdAt: text('created_at').notNull(),
   },
   (t) => [
-    uniqueIndex('sessions_book_day_unique').on(t.bookId, t.readOn),
+    index('sessions_book_idx').on(t.bookId),
     index('sessions_read_on_idx').on(t.readOn),
     check('sessions_page_range_check', sql`${t.endPage} >= ${t.startPage}`),
   ],

@@ -15,7 +15,7 @@ export type LibraryBook = {
   id: string;
   title: string;
   authors: string[];
-  status: 'want' | 'owned' | 'reading' | 'finished' | 'abandoned';
+  status: 'want' | 'owned' | 'reading' | 'finished' | 'abandoned' | 'missing';
   pageCount: number | null;
   currentPage: number;
   finishedAt: string | null;
@@ -41,6 +41,7 @@ export function LibraryView({ books }: { books: LibraryBook[] }) {
   const [showAllOwned, setShowAllOwned] = useState(false);
   const [showAllFinished, setShowAllFinished] = useState(false);
   const [showSetAside, setShowSetAside] = useState(false);
+  const [showMissing, setShowMissing] = useState(false);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -68,6 +69,7 @@ export function LibraryView({ books }: { books: LibraryBook[] }) {
   const owned = sortBooks(filtered.filter((b) => b.status === 'owned'));
   const want = sortBooks(filtered.filter((b) => b.status === 'want'));
   const abandoned = sortBooks(filtered.filter((b) => b.status === 'abandoned'));
+  const missing = sortBooks(filtered.filter((b) => b.status === 'missing'));
 
   const finishedAll = filtered.filter((b) => b.status === 'finished');
   const finishedYears = Array.from(
@@ -270,6 +272,29 @@ export function LibraryView({ books }: { books: LibraryBook[] }) {
       )}
       {showSetAside && abandoned.length === 0 && (
         <p className={styles.empty}>none set aside.</p>
+      )}
+
+      <button
+        type="button"
+        onClick={() => setShowMissing((v) => !v)}
+        className={styles.setAsideHeader}
+      >
+        <span className={styles.setAsideTitle}>
+          Missing <span className={styles.setAsideCount}>· {missing.length}</span>
+        </span>
+        <span className={styles.setAsideToggle}>
+          {showMissing ? 'collapse ↑' : 'expand ↓'}
+        </span>
+      </button>
+      {showMissing && missing.length > 0 && (
+        <div className={`${styles.grid} ${styles.gridAbandoned}`}>
+          {missing.map((b) => (
+            <SpineCell key={b.id} book={b} meta={b.authors[0] ?? '—'} />
+          ))}
+        </div>
+      )}
+      {showMissing && missing.length === 0 && (
+        <p className={styles.empty}>nothing missing.</p>
       )}
 
       {totalCount === 0 && (

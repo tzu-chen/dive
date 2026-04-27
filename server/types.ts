@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const bookStatusEnum = z.enum(['want', 'owned', 'reading', 'finished', 'abandoned']);
+export const bookStatusEnum = z.enum(['want', 'owned', 'reading', 'finished', 'abandoned', 'missing']);
 export type BookStatus = z.infer<typeof bookStatusEnum>;
 
 export const noteKindEnum = z.enum(['quote', 'thought']);

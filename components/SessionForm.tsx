@@ -20,7 +20,7 @@ export function SessionForm({
   const [note, setNote] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  const mutation = trpc.sessions.upsertForToday.useMutation({
+  const mutation = trpc.sessions.create.useMutation({
     onSuccess: () => {
       setNote('');
       setError(null);

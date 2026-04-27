@@ -10,6 +10,7 @@ const ACTIONS: { status: BookStatus; label: string }[] = [
   { status: 'owned', label: 'mark owned' },
   { status: 'finished', label: 'mark finished' },
   { status: 'abandoned', label: 'abandon' },
+  { status: 'missing', label: 'mark missing' },
 ];
 
 export function StatusActions({ bookId, current }: { bookId: string; current: BookStatus }) {
