@@ -4,13 +4,15 @@ export function MetricCard({
   label,
   value,
   unit,
+  highlighted = false,
 }: {
   label: string;
   value: string | number;
   unit?: string;
+  highlighted?: boolean;
 }) {
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${highlighted ? styles.highlighted : ''}`}>
       <div className={styles.label}>{label}</div>
       <div className={styles.value}>
         {value}

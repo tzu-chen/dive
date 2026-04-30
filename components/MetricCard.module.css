@@ -2,6 +2,41 @@
   background: var(--paper-sunken);
   border-radius: 8px;
   padding: 14px 16px;
+  position: relative;
+}
+
+.highlighted {
+  background:
+    linear-gradient(135deg, rgba(201, 168, 118, 0.18), rgba(201, 168, 118, 0.06)),
+    var(--paper-raised);
+  box-shadow:
+    inset 0 0 0 1px rgba(201, 168, 118, 0.45),
+    0 1px 0 rgba(139, 94, 52, 0.06);
+}
+
+.highlighted::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 14px;
+  width: 8px;
+  height: 18px;
+  background: var(--leather);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 70%, 0 100%);
+  box-shadow: 0 1px 1px rgba(58, 42, 26, 0.15);
+}
+
+.highlighted .label {
+  color: var(--leather);
+}
+
+.highlighted .value {
+  color: var(--leather);
+  font-weight: 600;
+}
+
+.highlighted .unit {
+  color: var(--ink-muted);
 }
 
 .label {

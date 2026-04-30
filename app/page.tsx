@@ -29,16 +29,23 @@ export default async function Dashboard() {
       </div>
 
       <div className={styles.metrics}>
-        <MetricCard label="streak" value={data.streak} unit="days" />
+        <MetricCard
+          label="streak"
+          value={data.streak}
+          unit="days"
+          highlighted={data.streak > 0}
+        />
         <MetricCard
           label="today"
           value={data.todayPages}
           unit={`/ ${data.dailyGoal} pp`}
+          highlighted={data.todayPages >= data.dailyGoal}
         />
         <MetricCard
           label="this year"
           value={data.booksFinishedThisYear}
           unit={`/ ${data.yearlyGoal}`}
+          highlighted={data.booksFinishedThisYear >= data.yearlyGoal}
         />
         <Link href="/library" className={styles.libraryMetric} aria-label="open the library">
           <MetricCard label="library" value={data.libraryCount} unit="books" />
