@@ -17,7 +17,12 @@ export function BookListRow({
 }) {
   return (
     <Link href={`/book/${book.id}`} className={styles.row}>
-      <BookSpine title={book.title} bookId={book.id} size="sm" hasCover={Boolean(book.coverPath)} />
+      <BookSpine
+        title={book.title}
+        bookId={book.id}
+        size="sm"
+        coverVersion={book.coverPath ? book.updatedAt : null}
+      />
       <div className={styles.body}>
         <div className={styles.title}>{book.title}</div>
         <div className={styles.author}>{authors.join(', ')}</div>

@@ -62,7 +62,7 @@ export default async function Dashboard() {
             startedAt={b.startedAt}
             noteCount={0}
             latestNote={b.latestNote}
-            hasCover={Boolean(b.coverPath)}
+            coverVersion={b.coverPath ? b.updatedAt : null}
           />
         ))
       )}
@@ -77,7 +77,7 @@ export default async function Dashboard() {
                 bookId={b.id}
                 title={b.title}
                 authors={JSON.parse(b.authors) as string[]}
-                hasCover={Boolean(b.coverPath)}
+                coverVersion={b.coverPath ? b.updatedAt : null}
               />
             ))}
           </div>

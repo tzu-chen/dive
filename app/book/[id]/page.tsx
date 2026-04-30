@@ -57,7 +57,12 @@ export default async function BookDetail({ params }: { params: Promise<{ id: str
 
       <div className={styles.headerCard}>
         <div className={styles.spineWrap}>
-          <BookSpine title={book.title} bookId={book.id} size="lg" hasCover={Boolean(book.coverPath)} />
+          <BookSpine
+            title={book.title}
+            bookId={book.id}
+            size="lg"
+            coverVersion={book.coverPath ? book.updatedAt : null}
+          />
           <RefetchCoverButton bookId={book.id} hasCover={Boolean(book.coverPath)} />
         </div>
         <div className={styles.headerBody}>

@@ -358,7 +358,7 @@ function SpineCell({
         bookId={book.id}
         size="fluid"
         progress={progress}
-        hasCover={Boolean(book.coverPath)}
+        coverVersion={book.coverPath ? book.updatedAt : null}
       />
       <div className={styles.cellTitle}>{book.title}</div>
       <div className={styles.cellMeta}>{meta}</div>

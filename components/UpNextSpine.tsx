@@ -6,18 +6,18 @@ export function UpNextSpine({
   bookId,
   title,
   authors,
-  hasCover,
+  coverVersion,
 }: {
   bookId: string;
   title: string;
   authors: string[];
-  hasCover?: boolean;
+  coverVersion?: string | null;
 }) {
   const lastName = authors[0]?.split(' ').pop() ?? '';
   return (
     <Link href={`/book/${bookId}`} className={styles.cell}>
       <div className={styles.spineWrap}>
-        <BookSpine title={title} bookId={bookId} size="fluid" hasCover={hasCover} />
+        <BookSpine title={title} bookId={bookId} size="fluid" coverVersion={coverVersion} />
       </div>
       <div className={styles.title}>{title}</div>
       <div className={styles.author}>{lastName}</div>

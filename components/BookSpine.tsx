@@ -8,23 +8,23 @@ export function BookSpine({
   bookId,
   size = 'md',
   progress,
-  hasCover = false,
+  coverVersion = null,
 }: {
   title: string;
   bookId: string;
   size?: Size;
   progress?: number;
-  hasCover?: boolean;
+  coverVersion?: string | null;
 }) {
   return (
     <div
       className={`${styles.spine} ${styles[size]}`}
       style={spineVars(bookId) as React.CSSProperties}
     >
-      {hasCover ? (
+      {coverVersion ? (
         <img
           className={styles.cover}
-          src={`/api/covers/${bookId}`}
+          src={`/api/covers/${bookId}?v=${encodeURIComponent(coverVersion)}`}
           alt={title}
           loading="lazy"
         />
