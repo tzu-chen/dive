@@ -1,12 +1,24 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { trpc } from '@/lib/trpc/client';
 import { formatMonthDay } from '@/server/dateUtil';
 import type { Session } from '@/server/schema';
 import styles from './SessionList.module.css';
 
 export function SessionList({ sessions }: { sessions: Session[] }) {
+  const router = useRouter();
+  const latestId = sessions.reduce<{ id: string; createdAt: string } | null>(
+    (best, s) => (best && best.createdAt >= s.createdAt ? best : { id: s.id, createdAt: s.createdAt }),
+    null,
+  )?.id;
+
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+
+  const deleteMutation = trpc.sessions.delete.useMutation({
+    onSuccess: () => router.refresh(),
+  });
 
   if (sessions.length === 0) {
     return <div className={styles.empty}>no sessions yet — log one to get started.</div>;
@@ -54,12 +66,28 @@ export function SessionList({ sessions }: { sessions: Session[] }) {
               <div className={styles.sessions}>
                 {ordered.map((s) => {
                   const pages = s.endPage - s.startPage;
+                  const isLatest = s.id === latestId;
                   return (
                     <div key={s.id} className={styles.session}>
                       <div className={styles.sessionHeader}>
                         <span>
                           p. {s.startPage} → {s.endPage} · {pages}pp
                         </span>
+                        {isLatest && (
+                          <button
+                            type="button"
+                            className={styles.delete}
+                            aria-label="delete latest session"
+                            disabled={deleteMutation.isPending}
+                            onClick={() => {
+                              if (window.confirm('delete the latest session?')) {
+                                deleteMutation.mutate({ id: s.id });
+                              }
+                            }}
+                          >
+                            ×
+                          </button>
+                        )}
                       </div>
                       {s.note && <div className={styles.note}>{s.note}</div>}
                     </div>

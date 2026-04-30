@@ -55,7 +55,29 @@
 .sessionHeader {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 8px;
   color: var(--ink-muted);
+}
+
+.delete {
+  background: none;
+  border: none;
+  padding: 0 4px;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--ink-faded);
+  cursor: pointer;
+}
+
+.delete:hover:not(:disabled) {
+  color: var(--leather);
+}
+
+.delete:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 
 .note {
